@@ -1,0 +1,50 @@
+# Claude Code for the desk's teams, through Amazon Bedrock in the EU. `powerdesk rollout` writes, per
+# team, an endpoint-managed managed-settings.json and a managed-mcp.json (deployed by MDM to the
+# system paths below), and validates them against the documented rules before writing.
+#
+# Endpoint-managed, not server-managed: Claude Code skips the server-managed settings fetch when a
+# third-party provider such as Bedrock is selected (CLAUDE_CODE_USE_BEDROCK), so on Bedrock the
+# policy has to arrive as a file or MDM profile (or through a Claude apps gateway).
+paths:
+  linux: /etc/claude-code/
+  macos: "/Library/Application Support/ClaudeCode/"
+  windows: 'C:\Program Files\ClaudeCode\'
+bedrock:
+  region: eu-central-1
+  model: eu.anthropic.claude-sonnet-4-5-20250929-v1:0
+  small_model: eu.anthropic.claude-haiku-4-5-20251001-v1:0
+mcp:
+  name: power-desk
+  url: https://desk-mcp.ectp.internal/dev/mcp     # the developer_tools surface: no book tools, Cedar-checked
+common:
+  env:
+    DISABLE_TELEMETRY: "1"
+    DISABLE_ERROR_REPORTING: "1"
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
+  deny:
+    - "Read(./.env)"
+    - "Read(./.env.*)"
+    - "Read(./secrets/**)"
+    - "Read(**/*.pem)"
+    - "Read(**/*.key)"
+    - "Read(**/positions/**)"
+    - "Read(**/books/**)"
+    - "Bash(curl *)"
+    - "Bash(wget *)"
+    - "Bash(aws s3 cp *)"
+    - "Bash(aws s3 sync *)"
+  ask:
+    - "Bash(git push *)"
+teams:
+  technology:
+    description: Platform and data engineers
+    allow: ["WebSearch", "Bash(pytest *)", "Bash(ruff *)", "Bash(npm test *)", "Bash(cdk synth *)"]
+    deny: []
+  quant-research:
+    description: Analysts building models on market data
+    allow: ["Bash(pytest *)", "Bash(python -m pytest *)"]
+    deny: ["WebFetch"]
+  front-office:
+    description: Traders and originators who script their own analysis
+    allow: []
+    deny: ["WebFetch", "WebSearch"]

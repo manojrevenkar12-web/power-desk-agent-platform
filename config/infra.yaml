@@ -1,0 +1,24 @@
+# AWS deployment settings for infra/ (CDK). Region and identity provider are per environment.
+region: eu-central-1
+account: "111111111111"          # placeholder; `cdk deploy -c account=...` overrides
+env_name: dev
+vpc:
+  cidr: 10.40.0.0/20
+  max_azs: 2
+oidc:
+  discovery_url: https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/v2.0/.well-known/openid-configuration
+  audience: power-desk-agent-platform
+  user_claim: desk_user
+image:
+  repository: power-desk                 # ECR repository the CI pipeline pushes to
+  tag: "0.1.0"                           # pinned per release; never "latest"
+mcp:
+  supported_versions: ["2025-11-25", "2026-07-28"]
+knowledge_base:
+  embedding_model: amazon.titan-embed-text-v2:0
+  database: powerdesk
+  table: bedrock_kb.desk_chunks
+aurora:
+  engine: "16.6"
+  min_acu: 0.5
+  max_acu: 4

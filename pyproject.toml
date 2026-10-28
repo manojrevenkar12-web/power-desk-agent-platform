@@ -1,0 +1,47 @@
+[project]
+name = "power-desk-agent-platform"
+version = "0.1.0"
+description = "Governed agent platform for a European power trading desk: Cedar-checked tools behind MCP and AgentCore Gateway, entitlement-filtered knowledge bases, grounded answers, measured evals."
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "numpy>=2.3", "pandas>=2.3", "scipy>=1.16", "pydantic>=2.12", "pyyaml>=6.0",
+  "cedarpy>=4.12", "mcp>=2.3", "pyjwt[crypto]>=2.10", "fastapi>=0.124", "uvicorn>=0.38",
+  "psycopg[binary]>=3.2", "pgvector>=0.4", "boto3>=1.42",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=9.0", "ruff>=0.14", "mypy>=1.19", "httpx>=0.28", "types-PyYAML"]
+
+[project.scripts]
+powerdesk = "powerdesk.cli:main"
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = ["db: needs PostgreSQL with pgvector (POWERDESK_TEST_DATABASE_URL)", "slow: runs the eval suites"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 200
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003", "RUF007", "RUF046", "SIM105", "E501"]
+
+[tool.mypy]
+python_version = "3.13"
+packages = ["powerdesk"]
+exclude = ["src/powerdesk/connectors/probes/"]
+mypy_path = "src"
+ignore_missing_imports = true
+warn_unused_ignores = false

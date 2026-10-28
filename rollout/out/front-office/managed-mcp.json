@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "power-desk": {
+      "type": "http",
+      "url": "https://desk-mcp.ectp.internal/dev/mcp"
+    }
+  }
+}

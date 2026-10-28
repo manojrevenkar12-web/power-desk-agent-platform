@@ -1,0 +1,97 @@
+# The stylised European power market the platform's tools serve. It is synthetic: a fundamental
+# model (demand, wind and solar from weather, a thermal merit order, renewables curtailing in
+# surplus) generates 15-minute day-ahead, intraday and imbalance prices. Real data comes in through
+# src/powerdesk/market/entsoe.py (ENTSO-E Transparency Platform, document A44) when a token is set.
+seed: 20260601
+start: "2026-05-31T22:00:00Z"   # 1 June 2026, 00:00 CEST
+end: "2026-09-30T22:00:00Z"     # 1 October 00:00 CEST, exclusive; 15-minute market time unit since 1 Oct 2025 (SDAC)
+mtu_minutes: 15
+utc_offset_hours: 2               # CEST over the whole period, for daily shapes
+fuels:
+  ttf_start_eur_mwh: 32.0         # gas, daily random walk
+  ttf_daily_vol: 0.025
+  eua_start_eur_t: 72.0           # carbon
+  eua_daily_vol: 0.02
+zones:
+  DE-LU:
+    demand_mean_gw: 55.0
+    demand_peak_to_mean: 1.22
+    weekend_factor: 0.86
+    solar_gw: 112.0
+    wind_onshore_gw: 66.0
+    wind_offshore_gw: 10.0
+    must_run_gw: 9.0              # biomass, run-of-river, CHP
+    thermal:                      # name: [GW, fuel multiplier on TTF, tCO2/MWh, fixed €/MWh], in merit order by cost
+      imports: [8.0, 0.0, 0.0, 58.0]
+      lignite: [15.0, 0.0, 1.10, 6.0]
+      hard_coal: [10.0, 0.0, 0.85, 14.0]
+      ccgt: [24.0, 1.82, 0.37, 4.0]
+      ocgt: [8.0, 2.63, 0.53, 6.0]
+      oil: [3.0, 0.0, 0.80, 210.0]
+    sink_gw: 14.0                 # exports, pumped hydro and batteries absorbing a surplus
+    sink_price_eur: 45.0          # price when the surplus first appears, falling to 0 as the sink fills
+    new_res_share: 0.30           # renewables under EEG §51 (2025): no premium in negative 15-min intervals, bid at 0
+    curtail_slope_eur_per_gw: 2.6 # how deep prices go per GW of surplus beyond what curtails at 0
+    floor_eur_mwh: -500.0         # SDAC harmonised minimum clearing price
+    cap_eur_mwh: 4000.0           # SDAC harmonised maximum clearing price
+    unit_span_eur: 12.0           # price rise across one block of the supply curve
+  FR:
+    demand_mean_gw: 44.0
+    demand_peak_to_mean: 1.18
+    weekend_factor: 0.88
+    solar_gw: 26.0
+    wind_onshore_gw: 24.0
+    wind_offshore_gw: 3.0
+    must_run_gw: 29.0             # nuclear running at reduced summer availability, hydro
+    thermal:
+      imports: [6.0, 0.0, 0.0, 48.0]
+      hydro_flex: [10.0, 0.0, 0.0, 60.0]
+      ccgt: [6.0, 1.82, 0.37, 4.0]
+      ocgt: [3.0, 2.63, 0.53, 6.0]
+      oil: [2.0, 0.0, 0.80, 210.0]
+    sink_gw: 9.0
+    sink_price_eur: 35.0
+    new_res_share: 0.35
+    curtail_slope_eur_per_gw: 2.4
+    floor_eur_mwh: -500.0
+    cap_eur_mwh: 4000.0
+    unit_span_eur: 12.0
+  NL:
+    demand_mean_gw: 13.0
+    demand_peak_to_mean: 1.20
+    weekend_factor: 0.88
+    solar_gw: 31.0
+    wind_onshore_gw: 7.0
+    wind_offshore_gw: 6.0
+    must_run_gw: 2.0
+    thermal:
+      imports: [5.0, 0.0, 0.0, 56.0]
+      ccgt: [9.0, 1.82, 0.37, 4.0]
+      hard_coal: [2.0, 0.0, 0.85, 14.0]
+      ocgt: [2.0, 2.63, 0.53, 6.0]
+      oil: [0.5, 0.0, 0.80, 210.0]
+    sink_gw: 3.5
+    sink_price_eur: 45.0
+    new_res_share: 0.35
+    curtail_slope_eur_per_gw: 9.0
+    floor_eur_mwh: -500.0
+    cap_eur_mwh: 4000.0
+    unit_span_eur: 12.0
+weather:
+  solar_peak_cf: 0.62             # fleet-wide peak capacity factor under clear sky
+  cloud_ar: 0.75                  # day-to-day persistence of cloudiness
+  wind_mean_cf_onshore: 0.17      # summer
+  wind_mean_cf_offshore: 0.38
+  wind_ar_hourly: 0.97
+  forecast_error_sd_wind: 0.035   # day-ahead forecast error, share of capacity
+  forecast_error_sd_solar: 0.025
+  demand_error_sd: 0.012
+intraday:
+  slope_eur_per_gw: 1.8           # how much a renewables shortfall lifts intraday over day-ahead
+  noise_eur: 4.0
+imbalance:                        # stylised reBAP-like settlement price
+  untraded_share: 0.35            # share of forecast error left for the TSO to balance
+  base_spread_eur: 15.0
+  slope_eur_per_gw: 22.0
+  floor_eur_mwh: -1000.0
+  cap_eur_mwh: 2000.0

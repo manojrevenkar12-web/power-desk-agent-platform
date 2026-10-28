@@ -1,0 +1,60 @@
+{
+  "": {
+    "entityTypes": {
+      "User": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "id": { "type": "String" },
+            "role": { "type": "String" },
+            "desk": { "type": "String" },
+            "insider_lists": { "type": "Set", "element": { "type": "String" } }
+          }
+        }
+      },
+      "Tool": {
+        "shape": { "type": "Record", "attributes": { "data_class": { "type": "String" } } }
+      },
+      "Book": {
+        "shape": { "type": "Record", "attributes": { "desk": { "type": "String" }, "kind": { "type": "String" } } }
+      },
+      "Document": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "classification": { "type": "String" },
+            "scope": { "type": "String" },
+            "desk": { "type": "String" },
+            "owner": { "type": "String" },
+            "chat": { "type": "String" },
+            "agent": { "type": "String" },
+            "insider_list": { "type": "String" }
+          }
+        }
+      }
+    },
+    "actions": {
+      "invoke_tool": {
+        "appliesTo": {
+          "principalTypes": ["User"],
+          "resourceTypes": ["Tool"],
+          "context": { "type": "Record", "attributes": { "surface": { "type": "String" }, "chat": { "type": "String" }, "agent": { "type": "String" } } }
+        }
+      },
+      "read_book": {
+        "appliesTo": {
+          "principalTypes": ["User"],
+          "resourceTypes": ["Book"],
+          "context": { "type": "Record", "attributes": { "surface": { "type": "String" }, "chat": { "type": "String" }, "agent": { "type": "String" } } }
+        }
+      },
+      "read_document": {
+        "appliesTo": {
+          "principalTypes": ["User"],
+          "resourceTypes": ["Document"],
+          "context": { "type": "Record", "attributes": { "surface": { "type": "String" }, "chat": { "type": "String" }, "agent": { "type": "String" } } }
+        }
+      }
+    }
+  }
+}

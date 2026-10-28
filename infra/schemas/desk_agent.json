@@ -1,0 +1,319 @@
+[
+ {
+  "description": "Average, minimum and maximum (with local times) of day-ahead, intraday or imbalance prices for a bidding zone and period; base, peak or off-peak.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "kind": {
+     "description": "one of: day_ahead, intraday, imbalance; default day_ahead",
+     "type": "string"
+    },
+    "product": {
+     "description": "one of: base, peak, offpeak; default base",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "zone": {
+     "description": "one of: DE-LU, FR, NL",
+     "type": "string"
+    }
+   },
+   "required": [
+    "zone",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "price_stats"
+ },
+ {
+  "description": "Negative day-ahead quarter hours in a zone and period: count, hours, share, longest run, by month.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "zone": {
+     "description": "one of: DE-LU, FR, NL",
+     "type": "string"
+    }
+   },
+   "required": [
+    "zone",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "negative_prices"
+ },
+ {
+  "description": "Capture price and capture rate of solar or wind in a zone: generation-weighted day-ahead price against the baseload average.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "technology": {
+     "description": "one of: solar, wind_onshore, wind_offshore, wind",
+     "type": "string"
+    },
+    "zone": {
+     "description": "one of: DE-LU, FR, NL",
+     "type": "string"
+    }
+   },
+   "required": [
+    "zone",
+    "start",
+    "end",
+    "technology"
+   ],
+   "type": "object"
+  },
+  "name": "capture_price"
+ },
+ {
+  "description": "What drove day-ahead prices in a zone and period: residual load, renewables, gas and carbon, which block of the supply curve set the price, and the lowest and highest quarter hours.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "zone": {
+     "description": "one of: DE-LU, FR, NL",
+     "type": "string"
+    }
+   },
+   "required": [
+    "zone",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "price_drivers"
+ },
+ {
+  "description": "Day-ahead forecast error of solar or wind generation in a zone: bias, mean absolute error, worst miss.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "technology": {
+     "description": "one of: solar, wind_onshore, wind_offshore, wind",
+     "type": "string"
+    },
+    "zone": {
+     "description": "one of: DE-LU, FR, NL",
+     "type": "string"
+    }
+   },
+   "required": [
+    "zone",
+    "start",
+    "end",
+    "technology"
+   ],
+   "type": "object"
+  },
+  "name": "forecast_error"
+ },
+ {
+  "description": "The books, PPAs and batteries you may see.",
+  "inputSchema": {
+   "properties": {},
+   "type": "object"
+  },
+  "name": "list_book_assets"
+ },
+ {
+  "description": "Value of one pay-as-produced PPA over a period: volume, capture price, P&L against the strike, shape discount, energy curtailed by a negative-price clause, imbalance cost.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "ppa": {
+     "description": "PPA id, for example PPA-DE-SOL-01",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ppa",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "ppa_valuation"
+ },
+ {
+  "description": "All PPAs in your origination books over a period, with totals.",
+  "inputSchema": {
+   "properties": {
+    "books": {
+     "description": "Books to include; default: every book you may see",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "ppa_portfolio"
+ },
+ {
+  "description": "Imbalance cost of a PPA's forecast errors at imbalance prices, and a stress with extra forecast error.",
+  "inputSchema": {
+   "properties": {
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "extra_error_pct": {
+     "description": "Stress: extra forecast error as a share of output, percent default 0.0; minimum 0; maximum 50",
+     "type": "number"
+    },
+    "ppa": {
+     "description": "PPA id, for example PPA-DE-SOL-01",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ppa",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "imbalance_exposure"
+ },
+ {
+  "description": "Day-ahead arbitrage backtest of a battery: perfect-foresight optimum (linear programme) against a simple daily charge/discharge rule.",
+  "inputSchema": {
+   "properties": {
+    "asset": {
+     "description": "Battery id, for example BESS-DE-01",
+     "type": "string"
+    },
+    "end": {
+     "description": "First local delivery date NOT included, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    },
+    "start": {
+     "description": "Local delivery date, YYYY-MM-DD format ^\\d{4}-\\d{2}-\\d{2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "asset",
+    "start",
+    "end"
+   ],
+   "type": "object"
+  },
+  "name": "battery_backtest"
+ },
+ {
+  "description": "Month futures in your trading books settled against the month's day-ahead average, with P&L and hedge ratio against PPA output.",
+  "inputSchema": {
+   "properties": {
+    "books": {
+     "description": "Books to include; default: every hedging book you may see",
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "month": {
+     "description": "Delivery month, YYYY-MM format ^\\d{4}-\\d{2}$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "month"
+   ],
+   "type": "object"
+  },
+  "name": "hedge_report"
+ },
+ {
+  "description": "Search the desk's knowledge: market rules, playbooks, research notes and documents you may read, across application, agent, user and chat scopes.",
+  "inputSchema": {
+   "properties": {
+    "k": {
+     "description": "default 4; minimum 1; maximum 8",
+     "type": "integer"
+    },
+    "query": {
+     "description": "minLength 3; maxLength 500",
+     "type": "string"
+    },
+    "scopes": {
+     "description": "Knowledge scopes to search; default all four",
+     "items": {
+      "description": "one of: application, agent, user, chat",
+      "type": "string"
+     },
+     "type": "array"
+    }
+   },
+   "required": [
+    "query"
+   ],
+   "type": "object"
+  },
+  "name": "search_knowledge"
+ }
+]

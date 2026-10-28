@@ -1,0 +1,5 @@
+# The simulated model used in CI. It plans from the conversation it is given and nothing else.
+# Fault injection makes the platform's safety mechanisms observable; the rates are assumptions,
+# chosen to exercise them, not measurements of any real model.
+derived_number_rate: 0.3          # share of answers where the model adds a number it computed itself
+obey_injected_instructions: false # red-team runs switch this on: the model follows instructions found in documents

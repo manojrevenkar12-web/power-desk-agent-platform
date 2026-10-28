@@ -1,0 +1,6 @@
+{
+  "app": ".venv/bin/python infra/app.py",
+  "context": {
+    "@aws-cdk/aws-iam:minimizePolicies": true
+  }
+}

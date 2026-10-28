@@ -1,0 +1,42 @@
+# Agent frameworks considered for desk tools. Each is installed into its own clean virtualenv and
+# measured: what it pulls in, under which licences, what it does at import (network), how long the
+# import takes, whether it fits a Lambda zip, and whether it can load and call the desk's MCP tools
+# with the user's token. `powerdesk connectors` writes reports/connectors/fitness.json and
+# docs/CONNECTORS.md. Thresholds below are the bar for "fit for the regulated environment".
+python: "3.13"
+lambda_unzipped_limit_mb: 250
+max_network_attempts_at_import: 0
+allowed_licences:      # SPDX ids or prefixes seen in package metadata; anything else is flagged
+  - MIT
+  - Apache
+  - BSD
+  - ISC
+  - PSF
+  - Python Software Foundation
+  - MPL-2.0
+  - Mozilla Public License
+  - Unlicense
+  - 0BSD
+  - HPND
+candidates:
+  langchain:
+    packages: ["langchain-core", "langchain-mcp-adapters", "langchain-aws"]
+    import: "import langchain_core, langchain_mcp_adapters.client, langchain_aws"
+    probe: langchain_probe.py
+  llamaindex:
+    packages: ["llama-index-core", "llama-index-tools-mcp", "llama-index-llms-bedrock-converse"]
+    import: "import llama_index.core, llama_index.tools.mcp, llama_index.llms.bedrock_converse"
+    probe: llamaindex_probe.py
+  strands:
+    packages: ["strands-agents"]
+    import: "import strands, strands.tools.mcp"
+    probe: strands_probe.py
+# n8n is a Node.js application, not a library: assessed from its documentation, not installed.
+documented:
+  n8n:
+    licence: "Sustainable Use License (fair-code, not OSI-approved): use or modify only for your own internal business purposes; hosting it for customers needs a commercial agreement; files with .ee. in the name are under the n8n Enterprise License."
+    licence_source: https://docs.n8n.io/n8n-community-license
+    network_by_default: "Sends diagnostics, version notifications and template requests to n8n servers unless N8N_DIAGNOSTICS_ENABLED=false, N8N_VERSION_NOTIFICATIONS_ENABLED=false, N8N_TEMPLATES_ENABLED=false and the diagnostics/frontend hook URLs are emptied."
+    network_source: https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/configuration-examples/isolate-n8n
+    mcp: "MCP Server Trigger and MCP Client Tool nodes; credentials live in n8n's own store, so per-user desk entitlements need the token passed per request."
+    mcp_source: https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server

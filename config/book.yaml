@@ -1,0 +1,40 @@
+# The desk's confidential book: who owns what. Every book belongs to one desk; Cedar policies
+# (policies/desk.cedar) decide who may read it.
+desks:
+  berlin-power: { zones: [DE-LU, NL] }
+  paris-power: { zones: [FR] }
+books:
+  trading-de: { desk: berlin-power, kind: hedges }
+  origination-de: { desk: berlin-power, kind: ppa }
+  vpp-de: { desk: berlin-power, kind: vpp }
+  vpp-nl: { desk: berlin-power, kind: vpp }
+  trading-fr: { desk: paris-power, kind: hedges }
+  origination-fr: { desk: paris-power, kind: ppa }
+
+# Pay-as-produced PPAs: the desk buys the plant's output at the strike and sells it at market.
+# negative_clause: no payment and no delivery in quarter hours with a negative day-ahead price.
+ppas:
+  PPA-DE-SOL-01: { book: origination-de, zone: DE-LU, tech: solar, mw: 50, strike: 48.0, negative_clause: false, start: "2026-01-01", end: "2028-12-31" }
+  PPA-DE-WIN-02: { book: origination-de, zone: DE-LU, tech: wind_onshore, mw: 80, strike: 62.0, negative_clause: false, start: "2025-07-01", end: "2030-06-30" }
+  PPA-DE-OFF-03: { book: origination-de, zone: DE-LU, tech: wind_offshore, mw: 100, strike: 70.0, negative_clause: true, start: "2026-04-01", end: "2036-03-31" }
+  PPA-DE-SOL-04: { book: origination-de, zone: DE-LU, tech: solar, mw: 30, strike: 41.5, negative_clause: true, start: "2026-06-01", end: "2031-05-31" }
+  PPA-FR-WIN-05: { book: origination-fr, zone: FR, tech: wind_onshore, mw: 40, strike: 58.0, negative_clause: false, start: "2025-01-01", end: "2029-12-31" }
+  PPA-FR-SOL-06: { book: origination-fr, zone: FR, tech: solar, mw: 25, strike: 44.0, negative_clause: true, start: "2026-03-01", end: "2033-02-28" }
+  PPA-NL-SOL-07: { book: origination-de, zone: NL, tech: solar, mw: 30, strike: 45.0, negative_clause: true, start: "2026-05-01", end: "2031-04-30" }
+
+# Batteries the desk optimises in the day-ahead market (virtual power plant).
+batteries:
+  BESS-DE-01: { book: vpp-de, zone: DE-LU, mw: 50, mwh: 100, round_trip: 0.88 }
+  BESS-DE-02: { book: vpp-de, zone: DE-LU, mw: 20, mwh: 40, round_trip: 0.86 }
+  BESS-NL-03: { book: vpp-nl, zone: NL, mw: 10, mwh: 20, round_trip: 0.88 }
+
+# Month futures the trading books hold (negative MW = sold).
+hedges:
+  - { book: trading-de, zone: DE-LU, product: base, month: "2026-06", mw: -60, price: 71.0 }
+  - { book: trading-de, zone: DE-LU, product: base, month: "2026-07", mw: -60, price: 78.5 }
+  - { book: trading-de, zone: DE-LU, product: base, month: "2026-08", mw: -50, price: 76.0 }
+  - { book: trading-de, zone: DE-LU, product: base, month: "2026-09", mw: -50, price: 82.0 }
+  - { book: trading-de, zone: DE-LU, product: peak, month: "2026-07", mw: -20, price: 61.0 }
+  - { book: trading-fr, zone: FR, product: base, month: "2026-07", mw: -30, price: 52.0 }
+  - { book: trading-fr, zone: FR, product: base, month: "2026-08", mw: -30, price: 49.5 }
+  - { book: trading-fr, zone: FR, product: base, month: "2026-09", mw: 25, price: 63.0 }

@@ -1,0 +1,11 @@
+# People and what they may see. Users are fictional. Roles map to Cedar policies.
+users:
+  lena:  { name: Lena Hartmann, role: trader, desk: berlin-power, insider_lists: [outage-q3-2026] }
+  marc:  { name: Marc Lefevre, role: trader, desk: paris-power, insider_lists: [] }
+  ines:  { name: Ines Moreau, role: originator, desk: paris-power, insider_lists: [] }
+  ravi:  { name: Ravi Menon, role: risk, desk: risk, insider_lists: [] }
+  sofia: { name: Sofia Lindqvist, role: analyst, desk: research, insider_lists: [] }
+  tom:   { name: Tom Becker, role: engineer, desk: technology, insider_lists: [] }
+# REMIT / MAR insider lists: people who may see inside information before it is published.
+insider_lists:
+  outage-q3-2026: { description: "Unplanned outage of a lignite unit, before the urgent market message is published" }

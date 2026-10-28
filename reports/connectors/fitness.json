@@ -1,0 +1,111 @@
+{
+ "call": {
+  "args": {
+   "end": "2026-08-01",
+   "start": "2026-07-01",
+   "zone": "DE-LU"
+  },
+  "tool": "price_stats"
+ },
+ "candidates": [
+  {
+   "anonymous": "refused: ExceptionGroup",
+   "dev_surface_book_tools": [],
+   "dev_surface_tools": 6,
+   "distributions": 60,
+   "errors": [],
+   "fit": true,
+   "fits_lambda_zip": true,
+   "import_ms_median_of_3": 1063.2,
+   "install_s": 1.4,
+   "licences_flagged": [],
+   "mcp_call_ok": true,
+   "mcp_call_value": 83.03,
+   "mcp_tools_listed": 12,
+   "name": "langchain",
+   "network_attempts_at_import": [],
+   "network_attempts_total": [],
+   "packages": [
+    "langchain-core",
+    "langchain-mcp-adapters",
+    "langchain-aws"
+   ],
+   "size_mb": 149.3,
+   "versions": {
+    "langchain-aws": "1.9.1",
+    "langchain-core": "1.7.1",
+    "langchain-mcp-adapters": "0.3.2",
+    "mcp": "1.30.0"
+   }
+  },
+  {
+   "anonymous": "refused: ExceptionGroup",
+   "dev_surface_book_tools": [],
+   "dev_surface_tools": 6,
+   "distributions": 87,
+   "errors": [],
+   "fit": true,
+   "fits_lambda_zip": true,
+   "import_ms_median_of_3": 1727.9,
+   "install_s": 0.5,
+   "licences_flagged": [],
+   "mcp_call_ok": true,
+   "mcp_call_value": 83.03,
+   "mcp_tools_listed": 12,
+   "name": "llamaindex",
+   "network_attempts_at_import": [],
+   "network_attempts_total": [],
+   "packages": [
+    "llama-index-core",
+    "llama-index-tools-mcp",
+    "llama-index-llms-bedrock-converse"
+   ],
+   "size_mb": 216.4,
+   "versions": {
+    "llama-index-core": "0.14.25",
+    "llama-index-llms-bedrock-converse": "0.15.5",
+    "llama-index-tools-mcp": "0.6.0",
+    "mcp": "2.3.0"
+   }
+  },
+  {
+   "anonymous": "refused: MCPClientInitializationError",
+   "dev_surface_book_tools": [],
+   "dev_surface_tools": 6,
+   "distributions": 48,
+   "errors": [],
+   "fit": true,
+   "fits_lambda_zip": true,
+   "import_ms_median_of_3": 1151.6,
+   "install_s": 0.2,
+   "licences_flagged": [],
+   "mcp_call_ok": true,
+   "mcp_call_value": 83.03,
+   "mcp_tools_listed": 12,
+   "name": "strands",
+   "network_attempts_at_import": [],
+   "network_attempts_total": [],
+   "packages": [
+    "strands-agents"
+   ],
+   "size_mb": 63.3,
+   "versions": {
+    "mcp": "2.1.1",
+    "strands-agents": "1.62.0"
+   }
+  }
+ ],
+ "documented": {
+  "n8n": {
+   "licence": "Sustainable Use License (fair-code, not OSI-approved): use or modify only for your own internal business purposes; hosting it for customers needs a commercial agreement; files with .ee. in the name are under the n8n Enterprise License.",
+   "licence_source": "https://docs.n8n.io/n8n-community-license",
+   "mcp": "MCP Server Trigger and MCP Client Tool nodes; credentials live in n8n's own store, so per-user desk entitlements need the token passed per request.",
+   "mcp_source": "https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server",
+   "network_by_default": "Sends diagnostics, version notifications and template requests to n8n servers unless N8N_DIAGNOSTICS_ENABLED=false, N8N_VERSION_NOTIFICATIONS_ENABLED=false, N8N_TEMPLATES_ENABLED=false and the diagnostics/frontend hook URLs are emptied.",
+   "network_source": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/basic-configuration/configuration-examples/isolate-n8n"
+  }
+ },
+ "expected_value": 83.03,
+ "generated": "2026-10-28T18:35:05Z",
+ "python": "3.13"
+}

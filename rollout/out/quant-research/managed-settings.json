@@ -1,0 +1,42 @@
+{
+  "allowManagedMcpServersOnly": true,
+  "allowManagedPermissionRulesOnly": true,
+  "allowedMcpServers": [
+    {
+      "serverUrl": "https://desk-mcp.ectp.internal/dev/mcp"
+    }
+  ],
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "eu.anthropic.claude-haiku-4-5-20251001-v1:0",
+    "ANTHROPIC_MODEL": "eu.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "AWS_REGION": "eu-central-1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pytest *)",
+      "Bash(python -m pytest *)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Bash(aws s3 cp *)",
+      "Bash(aws s3 sync *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/books/**)",
+      "Read(**/positions/**)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "WebFetch"
+    ],
+    "disableBypassPermissionsMode": "disable"
+  }
+}

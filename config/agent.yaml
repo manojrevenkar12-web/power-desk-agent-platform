@@ -1,0 +1,10 @@
+# The desk agent's runtime settings.
+model:
+  bedrock_model_id: eu.anthropic.claude-sonnet-4-5-20250929-v1:0   # cross-region inference profile within the EU
+  max_tokens: 2048
+  temperature: 0.0
+  prompt_caching: true            # cachePoint after the system prompt and the tool list
+max_steps: 10                     # model calls per question
+grounding:
+  retries: 1                      # times untraced numbers are sent back to the model before redaction
+data_window: { first_day: "2026-06-01", last_day: "2026-09-30" }
