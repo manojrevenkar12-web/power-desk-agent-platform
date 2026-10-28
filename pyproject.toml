@@ -12,6 +12,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=9.0", "ruff>=0.14", "mypy>=1.19", "httpx>=0.28", "types-PyYAML"]
+infra = ["aws-cdk-lib==2.275.0", "cdk-nag==3.0.2", "constructs>=10.4"]
 
 [project.scripts]
 powerdesk = "powerdesk.cli:main"

@@ -1,0 +1,116 @@
+/* Design tokens. Every colour, size, space and duration in the console comes from here.
+   Light is the default: desks are bright rooms. Dark follows the OS or the toggle. */
+:root {
+  --paper: #eef1f0;
+  --surface: #ffffff;
+  --surface-sunk: #e4e8e7;
+  --ink: #15212b;
+  --ink-soft: #3a4853;
+  --muted: #5c6a73;
+  --rule: #cfd6d6;
+  --focus: #1f5fbf;
+
+  /* signal colours, chosen from what they mean on a power desk */
+  --evidence: #1f5fbf;          /* a number traced to a tool result */
+  --evidence-wash: #e3ecf9;
+  --untraced: #b42318;          /* a number nobody returned */
+  --untraced-wash: #fbe9e7;
+  --denied: #8a5200;            /* refused by policy */
+  --denied-wash: #fbf0dc;
+  --ok: #17654a;
+  --ok-wash: #e1f1ea;
+
+  /* price ramp for the quarter-hour strip: negative, cheap, middle, dear, scarce */
+  --price-negative: #0e7c74;
+  --price-low: #7fb0aa;
+  --price-mid: #b9c2bc;
+  --price-high: #cf8a3e;
+  --price-scarce: #a2441f;
+
+  --font: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif;
+  --step--1: 0.8125rem;   /* 13 */
+  --step-0: 0.9375rem;    /* 15 */
+  --step-1: 1.0625rem;    /* 17 */
+  --step-2: 1.375rem;     /* 22 */
+  --step-3: 1.875rem;     /* 30 */
+  --step-4: 2.75rem;      /* 44 */
+  --leading-tight: 1.15;
+  --leading-body: 1.55;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --gutter: 1rem;
+  --measure: 68ch;
+  --rail: 15rem;
+
+  --radius-control: 6px;
+  --radius-panel: 10px;
+  --shadow-panel: 0 1px 0 rgb(21 33 43 / 0.06), 0 6px 24px -12px rgb(21 33 43 / 0.18);
+
+  --strip-height: 9rem;
+  --strip-gap: 1px;
+
+  --dur-quick: 140ms;
+  --dur-calm: 320ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1519;
+    --surface: #172026;
+    --surface-sunk: #121a1f;
+    --ink: #e6ecee;
+    --ink-soft: #c3ccd0;
+    --muted: #8d9aa2;
+    --rule: #2a363d;
+    --focus: #7fb0ff;
+    --evidence: #8fb7ff;
+    --evidence-wash: #1b2a40;
+    --untraced: #ff8a7a;
+    --untraced-wash: #3a1d1a;
+    --denied: #f0b45a;
+    --denied-wash: #33270f;
+    --ok: #6fd3a8;
+    --ok-wash: #14302a;
+    --price-negative: #35b3a8;
+    --price-low: #4f7f7a;
+    --price-mid: #56625c;
+    --price-high: #d39246;
+    --price-scarce: #e0683d;
+    --shadow-panel: 0 1px 0 rgb(0 0 0 / 0.3), 0 8px 28px -14px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #0f1519;
+  --surface: #172026;
+  --surface-sunk: #121a1f;
+  --ink: #e6ecee;
+  --ink-soft: #c3ccd0;
+  --muted: #8d9aa2;
+  --rule: #2a363d;
+  --focus: #7fb0ff;
+  --evidence: #8fb7ff;
+  --evidence-wash: #1b2a40;
+  --untraced: #ff8a7a;
+  --untraced-wash: #3a1d1a;
+  --denied: #f0b45a;
+  --denied-wash: #33270f;
+  --ok: #6fd3a8;
+  --ok-wash: #14302a;
+  --price-negative: #35b3a8;
+  --price-low: #4f7f7a;
+  --price-mid: #56625c;
+  --price-high: #d39246;
+  --price-scarce: #e0683d;
+  --shadow-panel: 0 1px 0 rgb(0 0 0 / 0.3), 0 8px 28px -14px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}

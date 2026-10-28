@@ -116,6 +116,27 @@ def create_app(desk: Desk | None = None) -> FastAPI:
             "tool_calls": [{k: t[k] for k in ("name", "input", "ok", "call_id", "denied_by", "error", "result")} for t in turn.tool_calls],
         }
 
+    @app.get("/api/market/day")
+    def market_day(zone: str = "DE-LU", day: str = "2026-08-12", u: str = Depends(user)) -> dict[str, Any]:
+        """One delivery day in 15-minute products (market data: every desk user may read it)."""
+        from datetime import date, timedelta
+
+        from powerdesk.quant.common import Period, QuantError, local_str, window
+
+        try:
+            d = date.fromisoformat(day)
+            w = window(zone, Period.parse(d.isoformat(), (d + timedelta(days=1)).isoformat()))
+        except (ValueError, QuantError) as e:
+            raise HTTPException(400, str(e)) from e
+        return {
+            "zone": zone,
+            "day": day,
+            "intervals": [
+                {"at": local_str(ts), "da": round(float(r.da_price), 2), "solar_mw": round(float(r.solar_mw)), "wind_mw": round(float(r.wind_onshore_mw + r.wind_offshore_mw))}
+                for ts, r in w.iterrows()
+            ],
+        }
+
     @app.get("/api/evals")
     def evals(u: str = Depends(user)) -> dict[str, Any]:
         out: dict[str, Any] = {}
