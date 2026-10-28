@@ -27,9 +27,12 @@ jobs:
         with: { python-version: "3.13", cache: pip }
       - uses: actions/setup-node@v4
         with: { node-version: "22" }
-      - run: pip install -e ".[dev,infra]"
+      - run: pip install -c constraints.txt -e ".[dev,infra]"
       - run: ruff check src infra tests && ruff format --check src infra tests
-      - run: mypy
+      - name: mypy
+        run: |
+          set -o pipefail
+          mypy | sed -E 's/^([^:]+):([0-9]+): error: (.*)$/::error file=\1,line=\2::\3/'
       - name: All tests (pgvector, CDK synth with cdk-nag)
         run: pytest -q
       - name: Evals and release gate
@@ -50,7 +53,7 @@ jobs:
         with: { python-version: "3.13", cache: pip }
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm, cache-dependency-path: console/package-lock.json }
-      - run: pip install -e ..
+      - run: pip install -c ../constraints.txt -e ..
       - run: npm ci
       - run: npx tsc -p .
       - run: npm test
